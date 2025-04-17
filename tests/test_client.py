@@ -3,7 +3,6 @@ from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 import json
 
-# Static tool descriptions as a workaround for mcp bug
 TOOL_DESCRIPTIONS = {
     "fetch_customer": "Fetch a customer by ID",
     "create_customer": "Create a new customer",
@@ -29,18 +28,15 @@ async def run_client():
         async with ClientSession(read, write) as session:
             await session.initialize()
 
-            # List tools
             print("Listing tools:")
             tools_result = await session.list_tools()
             tools_with_descriptions = []
             for tool in tools_result.tools:
                 tool_dict = tool.__dict__.copy()
-                # Add description from static mapping
                 tool_dict["description"] = TOOL_DESCRIPTIONS.get(tool_dict["name"], "")
                 tools_with_descriptions.append(tool_dict)
             print(json.dumps(tools_with_descriptions, indent=2))
 
-            # Fetch customer
             print("\nFetching customer:")
             result = await session.call_tool(
                 "fetch_customer",
@@ -49,7 +45,6 @@ async def run_client():
             content_texts = [item.text for item in result.content if hasattr(item, 'text')]
             print(json.dumps(content_texts, indent=2))
 
-            # Create sales order
             print("\nCreating sales order:")
             result = await session.call_tool(
                 "create_sales_order",
@@ -58,7 +53,6 @@ async def run_client():
             content_texts = [item.text for item in result.content if hasattr(item, 'text')]
             print(json.dumps(content_texts, indent=2))
 
-            # Execute SuiteQL
             print("\nExecuting SuiteQL:")
             result = await session.call_tool(
                 "execute_suiteql",

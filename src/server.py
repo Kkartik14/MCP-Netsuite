@@ -6,6 +6,8 @@ from typing import Dict, Any, List, Optional
 from pydantic import BaseModel, Field
 import json
 import sqlparse
+import sys
+import traceback
 
 # Define custom McpError and ErrorData
 class ErrorData(BaseModel):
@@ -304,4 +306,11 @@ logger.info("Registration complete")
 
 if __name__ == "__main__":
     logger.info("Starting NetSuite MCP server...")
-    mcp.run(transport="stdio")
+    print("Starting NetSuite MCP server...", file=sys.stderr)
+    try:
+        mcp.run(transport="stdio")
+        logger.info("NetSuite MCP server is running, waiting for client requests")
+    except Exception as e:
+        logger.error(f"Server failed: {str(e)}")
+        print(f"Server failed with error: {str(e)}\n{traceback.format_exc()}", file=sys.stderr)
+        raise
