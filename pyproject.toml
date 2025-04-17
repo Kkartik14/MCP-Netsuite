@@ -1,0 +1,16 @@
+[project]
+name = "mcp-netsuite"
+version = "0.1.0"
+description = "NetSuite MCP Server"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "mcp[cli]",
+    "fastapi",
+    "uvicorn",
+    "requests",
+    "python-dotenv",
+    "cachetools",
+    "pydantic",
+    "httpx",
+]

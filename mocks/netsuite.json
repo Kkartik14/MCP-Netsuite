@@ -1,0 +1,42 @@
+{
+    "record/v1/customer/123456": {
+        "id": "123456",
+        "companyName": "Acme Corp",
+        "email": "contact@acme.com",
+        "balance": 1000.50,
+        "billState": "CA"
+    },
+    "record/v1/salesOrder/987654": {
+        "id": "987654",
+        "entity": { "id": "123456" },
+        "item": {
+            "items": [
+                { "item": { "id": "789" }, "quantity": 2 }
+            ]
+        }
+    },
+    "record/v1/invoice/456789": {
+        "id": "456789",
+        "createdFrom": { "id": "987654" },
+        "total": 500.00
+    },
+    "query/v1/suiteql": {
+        "items": [
+            { "id": "123456", "companyName": "Acme Corp", "email": "contact@acme.com" },
+            { "id": "123457", "companyName": "Beta Inc", "email": "info@beta.com" }
+        ],
+        "totalResults": 2
+    },
+    "record/v1/metadata-catalog": {
+        "records": [
+            {
+                "type": "customer",
+                "fields": [
+                    { "name": "companyName", "type": "string" },
+                    { "name": "email", "type": "string" },
+                    { "name": "balance", "type": "float" }
+                ]
+            }
+        ]
+    }
+}
