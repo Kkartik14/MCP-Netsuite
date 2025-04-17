@@ -10,7 +10,8 @@ dependencies = [
     "uvicorn",
     "requests",
     "python-dotenv",
-    "cachetools",
     "pydantic",
     "httpx",
+    "sqlparse>=0.5.3",
+    "timeout-decorator>=0.5.0",
 ]

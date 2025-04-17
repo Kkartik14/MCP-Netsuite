@@ -4,37 +4,97 @@
         "companyName": "Acme Corp",
         "email": "contact@acme.com",
         "balance": 1000.50,
-        "billState": "CA"
+        "billState": "CA",
+        "subsidiary": {"id": "1"}
     },
-    "record/v1/salesOrder/987654": {
-        "id": "987654",
-        "entity": { "id": "123456" },
-        "item": {
-            "items": [
-                { "item": { "id": "789" }, "quantity": 2 }
-            ]
-        }
-    },
-    "record/v1/invoice/456789": {
-        "id": "456789",
-        "createdFrom": { "id": "987654" },
-        "total": 500.00
+    "record/v1/customer": {
+        "id": "123457",
+        "companyName": "Mock Customer Inc",
+        "email": "new@mock.com",
+        "subsidiary": {"id": "1"},
+        "status": "created"
     },
     "query/v1/suiteql": {
         "items": [
-            { "id": "123456", "companyName": "Acme Corp", "email": "contact@acme.com" },
-            { "id": "123457", "companyName": "Beta Inc", "email": "info@beta.com" }
+            {"id": "123456", "companyName": "Acme Corp", "email": "contact@acme.com"},
+            {"id": "123457", "companyName": "Beta Inc", "email": "info@beta.com"}
         ],
         "totalResults": 2
+    },
+    "record/v1/salesOrder/987654": {
+        "id": "987654",
+        "entity": {"id": "123456"},
+        "item": {
+            "items": [
+                {"item": {"id": "789"}, "quantity": 2}
+            ]
+        },
+        "status": "pending"
+    },
+    "record/v1/salesOrder": {
+        "id": "987655",
+        "entity": {"id": "123456"},
+        "item": {
+            "items": [
+                {"item": {"id": "789"}, "quantity": 2}
+            ]
+        },
+        "status": "created"
+    },
+    "record/v1/invoice/456789": {
+        "id": "456789",
+        "createdFrom": {"id": "987654"},
+        "total": 500.00,
+        "status": "open"
+    },
+    "record/v1/invoice": {
+        "id": "456790",
+        "createdFrom": {"id": "987654"},
+        "total": 500.00,
+        "status": "created"
+    },
+    "record/v1/vendorBill/112233": {
+        "id": "112233",
+        "entity": {"id": "445566"},
+        "total": 750.00,
+        "status": "pending"
+    },
+    "record/v1/vendorBill": {
+        "id": "112234",
+        "entity": {"id": "445566"},
+        "total": 750.00,
+        "status": "created"
     },
     "record/v1/metadata-catalog": {
         "records": [
             {
                 "type": "customer",
                 "fields": [
-                    { "name": "companyName", "type": "string" },
-                    { "name": "email", "type": "string" },
-                    { "name": "balance", "type": "float" }
+                    {"name": "companyName", "type": "string"},
+                    {"name": "email", "type": "string"},
+                    {"name": "balance", "type": "float"},
+                    {"name": "subsidiary", "type": "record"}
+                ]
+            },
+            {
+                "type": "salesOrder",
+                "fields": [
+                    {"name": "entity", "type": "record"},
+                    {"name": "item", "type": "list"}
+                ]
+            },
+            {
+                "type": "invoice",
+                "fields": [
+                    {"name": "createdFrom", "type": "record"},
+                    {"name": "total", "type": "float"}
+                ]
+            },
+            {
+                "type": "vendorBill",
+                "fields": [
+                    {"name": "entity", "type": "record"},
+                    {"name": "total", "type": "float"}
                 ]
             }
         ]
