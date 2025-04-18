@@ -1,0 +1,27 @@
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    required:
+      - mcpApiKey
+    properties:
+      mcpApiKey:
+        type: string
+        description: API key for MCP server authentication
+      netsuiteMock:
+        type: boolean
+        description: Enable mock mode for NetSuite data
+        default: true
+  commandFunction: |
+    (config) => ({
+      command: "python",
+      args: ["/app/src/server.py"],
+      env: {
+        MCP_API_KEY: config.mcpApiKey,
+        NETSUITE_MOCK: config.netsuiteMock ? "true" : "false",
+        PYTHONPATH: "/app/src"
+      }
+    })
+build:
+  dockerfile: Dockerfile
+  dockerBuildPath: .
