@@ -1,5 +1,5 @@
 from mcp.server.fastmcp import FastMCP
-from mcp.types import Tool
+from mcp.types import Tool, TextContent
 from netsuite_client import NetSuiteClient
 from logger import logger
 from typing import Dict, Any, List, Optional
@@ -8,6 +8,7 @@ import json
 import sqlparse
 import sys
 import traceback
+import os
 
 # Define custom McpError and ErrorData
 class ErrorData(BaseModel):
@@ -305,8 +306,18 @@ mcp.tools = list_tools()
 logger.info("Registration complete")
 
 if __name__ == "__main__":
-    logger.info("Starting NetSuite MCP server...")
-    print("Starting NetSuite MCP server...", file=sys.stderr)
+    logger.info("Starting NetSuite MCP server")
+    # Validate MCP_API_KEY before starting
+    api_key = os.getenv("MCP_API_KEY")
+    if not api_key:
+        logger.error("Missing MCP_API_KEY environment variable")
+        print("Error: Missing MCP_API_KEY environment variable", file=sys.stderr)
+        sys.exit(1)
+    if api_key != "default_key":
+        logger.error(f"Invalid MCP_API_KEY: {api_key}")
+        print(f"Error: Invalid MCP_API_KEY: {api_key}", file=sys.stderr)
+        sys.exit(1)
+    logger.info("MCP_API_KEY validated successfully")
     try:
         mcp.run(transport="stdio")
         logger.info("NetSuite MCP server is running, waiting for client requests")
