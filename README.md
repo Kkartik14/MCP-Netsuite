@@ -1,3 +1,5 @@
+[![MseeP Badge](https://mseep.net/pr/kkartik14-mcp-netsuite-badge.jpg)](https://mseep.ai/app/kkartik14-mcp-netsuite)
+
 # MCP-Netsuite
 This is an mock MCP server for Oracle Netsuite
 
